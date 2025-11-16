@@ -164,5 +164,19 @@ namespace PingMonitor
             path.CloseFigure();
             return path;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (animationTimer != null)
+                {
+                    animationTimer.Stop();
+                    animationTimer.Dispose();
+                    animationTimer = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -209,7 +209,7 @@ namespace PingMonitor
             this.MinimumSize = new System.Drawing.Size(1000, 555);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ping Monitor – مراقب البنق";
+            this.Text = "PingMonitor SA.v1 — أداة مراقبة البنق";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.statusStrip.ResumeLayout(false);

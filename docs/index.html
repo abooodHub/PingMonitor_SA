@@ -1,35 +1,121 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ping Monitor – مراقب البنق</title>
-<style>
-body{margin:0;background:#151515;color:#fff;font-family:Segoe UI,Segoe UI Emoji,Arial,sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:40px}
-h1{font-size:28px;margin:0 0 10px}
-p{line-height:1.7}
-.btn{display:inline-block;background:#00a0d0;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;margin-top:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-.card{background:#1f1f1f;border:1px solid #2a2a2a;border-radius:10px;padding:16px}
-.muted{color:#bbb;font-size:14px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PingMonitor SA.v1 — أداة مراقبة البنق</title>
+  <style>
+    :root{--bg:#121212;--fg:#ffffff;--muted:#aaaaaa;--card:#1b1b1b;--border:#2a2a2a;--accent:#00a0d0;--good:#28a745;--warn:#ff9800}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:Segoe UI,Segoe UI Emoji,Arial,sans-serif}
+    .wrap{max-width:960px;margin:0 auto;padding:40px}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+    h1{font-size:28px;margin:0}
+    .ver{color:var(--muted);font-size:14px}
+    .hero{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+    .hero p{line-height:1.8;margin:8px 0}
+    .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;margin-top:14px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+    .card h2{margin:0 0 8px}
+    ul{margin:0;padding-inline-start:18px}
+    li{margin:6px 0}
+    .muted{color:var(--muted);font-size:14px}
+    footer{margin-top:32px;color:var(--muted);font-size:13px}
+    .shots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .shots img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);cursor:zoom-in;transition:transform .2s}
+    .shots img:hover{transform:scale(1.02)}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+    .lightbox.active{display:flex}
+    .lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;border:1px solid var(--border);background:#000}
+  </style>
+  <meta name="description" content="PingMonitor SA.v1 — أداة لمراقبة البنق والجيتار وفقد البيانات مع واجهة حديثة.">
 </head>
 <body>
-<div class="wrap">
-<h1>Ping Monitor – مراقب البنق</h1>
-<p>تطبيق ويندوز لعرض البنق والجيتار وفقد البيانات لخوادم متعددة مع واجهة حديثة ودعم الإيموجي.</p>
-<a class="btn" href="https://github.com/" target="_blank">فتح المستودع على GitHub</a>
-<div class="grid">
-<div class="card">
-<h2>المزايا</h2>
-<p>قياس البنق، حساب الجيتار، عرض فقد البيانات، تبديل اللغة، أعلام الدول، فرز الجداول.</p>
-</div>
-<div class="card">
-<h2>التشغيل</h2>
-<p class="muted">يتطلب .NET Framework 4.7.2 على ويندوز.</p>
-</div>
-</div>
-</div>
+  <div class="wrap">
+    <header>
+      <h1>PingMonitor SA.v1 — أداة مراقبة البنق</h1>
+      <span class="ver">v1</span>
+    </header>
+
+    <section class="hero">
+      <p>تطبيق ويندوز لقياس البنق والجيتار وفقد البيانات لخوادم متعددة، مع دعم لغتين وعرض أعلام الدول وفرز النتائج.</p>
+      <a class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest" target="_blank">⬇️ تحميل البرنامج</a>
+    </section>
+
+    <div class="grid">
+      <div class="card">
+        <h2>المزايا</h2>
+        <ul>
+          <li>قياس البنق بشكل دوري مع ألوان دلالية</li>
+          <li>حساب الجيتار (Jitter) وفقد البيانات (Loss)</li>
+          <li>تبديل اللغة عربي/إنجليزي</li>
+          <li>أعلام الدول وصفيحة مزوّدين قابلة للتصفية</li>
+          <li>فرز الأعمدة حسب القيم</li>
+          <li>أزرار حديثة بواجهة متدرجة ودعم الإيموجي</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>المتطلبات</h2>
+        <ul>
+          <li>.NET Framework 4.7.2</li>
+          <li>ويندوز 10 أو أحدث</li>
+        </ul>
+        <p class="muted">إن لم يكن .NET 4.7.2 مثبتًا، ثبّته أولًا ثم شغّل البرنامج.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>طريقة الاستخدام</h2>
+        <ul>
+          <li>بعد التشغيل، اختر مزوّد الخدمة من الشريط العلوي</li>
+          <li>راقب البنق والجيتار وفقد البيانات في القائمة</li>
+          <li>استخدم زر تغيير الفترة لضبط معدل التحديث</li>
+          <li>بدّل اللغة من زر 🌐 أعلى اليمين</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>المصدر</h2>
+        <p><a class="btn" href="https://github.com/abooodHub/PingMonitor_SA" target="_blank">المستودع على GitHub</a></p>
+        <p class="muted">فعّل GitHub Pages من إعدادات المستودع لاستخدام هذا الملف كصفحة هبوط.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+      <h2>لقطات الشاشة</h2>
+      <div class="shots">
+        <img src="img/1-AR.png" alt="لقطة شاشة – الواجهة العربية" loading="lazy">
+        <img src="img/1-EN.png" alt="Screenshot – English UI" loading="lazy">
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <img id="lightbox-img" alt="">
+    </div>
+
+    <footer>
+      © PingMonitor SA.v2 — أداة مراقبة البنق
+    </footer>
+  </div>
+  <script>
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.shots img').forEach(img=>{
+      img.addEventListener('click',()=>{
+        lbImg.src = img.src;
+        lbImg.alt = img.alt || '';
+        lb.classList.add('active');
+        lb.setAttribute('aria-hidden','false');
+      });
+    });
+    function closeLb(){
+      lb.classList.remove('active');
+      lb.setAttribute('aria-hidden','true');
+      lbImg.removeAttribute('src');
+    }
+    lb.addEventListener('click', (e)=>{ if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown',(e)=>{ if (e.key === 'Escape') closeLb(); });
+  </script>
 </body>
 </html>

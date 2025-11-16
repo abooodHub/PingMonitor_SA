@@ -17,6 +17,7 @@ namespace PingMonitor
         private int updateInterval = 5000;
         private string currentLanguage = "ar";
         private bool updating = true;
+        private bool isClosing = false;
 
         private Dictionary<string, List<long>> lastPingTimes = new Dictionary<string, List<long>>();
         private Dictionary<string, int> lostCount = new Dictionary<string, int>();
@@ -206,7 +207,19 @@ namespace PingMonitor
         // ============== حدث إغلاق النموذج ==============
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            isClosing = true;
+            updating = false;
+            try { pingTimer.Tick -= PingTimer_Tick; } catch {}
+            try { pingTimer.Stop(); } catch {}
+            try { pingTimer.Dispose(); } catch {}
             SaveSettings();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            try { Application.ExitThread(); } catch {}
+            try { Environment.Exit(0); } catch {}
         }
 
         // ============== حفظ الإعدادات ==============
@@ -221,9 +234,13 @@ namespace PingMonitor
                 List<string> selectedProviders = new List<string>();
                 foreach (Control ctrl in pnlProviders.Controls)
                 {
-                    if (ctrl is CheckBox cb && cb.Checked)
+                    if (ctrl is CheckBox)
                     {
-                        selectedProviders.Add(cb.Text);
+                        CheckBox cb = (CheckBox)ctrl;
+                        if (cb.Checked)
+                        {
+                            selectedProviders.Add(cb.Text);
+                        }
                     }
                 }
                 Properties.Settings.Default.SelectedProviders = string.Join(",", selectedProviders);
@@ -265,8 +282,9 @@ namespace PingMonitor
                     string[] selectedProviders = Properties.Settings.Default.SelectedProviders.Split(',');
                     foreach (Control ctrl in pnlProviders.Controls)
                     {
-                        if (ctrl is CheckBox cb)
+                        if (ctrl is CheckBox)
                         {
+                            CheckBox cb = (CheckBox)ctrl;
                             cb.Checked = selectedProviders.Contains(cb.Text);
                         }
                     }
@@ -459,9 +477,13 @@ namespace PingMonitor
             List<string> checkedProviders = new List<string>();
             foreach (Control ctrl in pnlProviders.Controls)
             {
-                if (ctrl is CheckBox cb && cb.Checked)
+                if (ctrl is CheckBox)
                 {
-                    checkedProviders.Add(cb.Text);
+                    CheckBox cb = (CheckBox)ctrl;
+                    if (cb.Checked)
+                    {
+                        checkedProviders.Add(cb.Text);
+                    }
                 }
             }
 
@@ -614,7 +636,7 @@ namespace PingMonitor
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(10);
-                    string response = await client.GetStringAsync($"http://ip-api.com/json/{ip}?fields=status,country,countryCode,regionName,city");
+                    string response = await client.GetStringAsync("http://ip-api.com/json/" + ip + "?fields=status,country,countryCode,regionName,city");
 
                     // تحليل الاستجابة JSON (للتبسيط نستخدم تقسيم النص)
                     string[] parts = response.Split(new char[] { ':', ',', '{', '}', '"' }, StringSplitOptions.RemoveEmptyEntries);
@@ -657,15 +679,15 @@ namespace PingMonitor
                     string result = "";
                     if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(region) && !string.IsNullOrEmpty(country))
                     {
-                        result = $"({city}, {country})";
+                        result = "(" + city + ", " + country + ")";
                     }
                     else if (!string.IsNullOrEmpty(region) && !string.IsNullOrEmpty(country))
                     {
-                        result = $"({region}, {country})";
+                        result = "(" + region + ", " + country + ")";
                     }
                     else if (!string.IsNullOrEmpty(country))
                     {
-                        result = $"({country})";
+                        result = "(" + country + ")";
                     }
 
                     return result;
@@ -824,7 +846,8 @@ namespace PingMonitor
 
                 if (inputForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (int.TryParse(textBox.Text, out int secs) && secs > 0)
+                    int secs;
+                    if (int.TryParse(textBox.Text, out secs) && secs > 0)
                     {
                         updateInterval = secs * 1000;
                         pingTimer.Interval = updateInterval;
@@ -843,6 +866,7 @@ namespace PingMonitor
         // ============== حدث المؤقّت PingTimer_Tick لتحديث البنق بشكل غير متزامن ==============
         private async void PingTimer_Tick(object sender, EventArgs e)
         {
+            if (isClosing) return;
             activeServerCount = 0;
             offlineServerCount = 0;
 
@@ -853,6 +877,7 @@ namespace PingMonitor
                 try
                 {
                     PingReply reply = await pingSender.SendPingAsync(host, 2000);
+                    if (isClosing) return;
                     if (reply.Status == IPStatus.Success)
                     {
                         activeServerCount++;
@@ -1085,8 +1110,10 @@ namespace PingMonitor
                 string textX = itemX.SubItems[colIndex].Text;
                 string textY = itemY.SubItems[colIndex].Text;
 
-                if (double.TryParse(textX.Replace(" ms", "").Replace("%", "").Trim(), out double numX) &&
-                    double.TryParse(textY.Replace(" ms", "").Replace("%", "").Trim(), out double numY))
+                double numX;
+                double numY;
+                if (double.TryParse(textX.Replace(" ms", "").Replace("%", "").Trim(), out numX) &&
+                    double.TryParse(textY.Replace(" ms", "").Replace("%", "").Trim(), out numY))
                 {
                     return numX.CompareTo(numY);
                 }

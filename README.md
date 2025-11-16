@@ -3,9 +3,9 @@
 تطبيق ويندوز لقياس البنق والجيتار وفقد البيانات لخوادم متعددة بواجهة حديثة ودعم العربية والإنجليزية.
 
 ## التحميل
-- تنزيل مباشر للملف التنفيذي (v1.0.0):
-  - https://github.com/abooodHub/PingMonitor_SA/releases/download/v1.0.0/PingMonitor%20SA.v1%20%E2%80%94%20%D8%A3%D8%AF%D8%A7%D8%A9%20%D9%85%D8%B1%D8%A7%D9%82%D8%A8%D8%A9%20%D8%A7%D9%84%D8%A8%D9%86%D9%82.exe
-- صفحة الإصدارات: `https://github.com/abooodHub/PingMonitor_SA/releases/latest`
+- تنزيل مباشر للملف التنفيذي (من أحدث إصدار):
+  - https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor%20SA.v1%20%E2%80%94%20%D8%A3%D8%AF%D8%A7%D8%A9%20%D9%85%D8%B1%D8%A7%D9%82%D8%A8%D8%A9%20%D8%A7%D9%84%D8%A8%D9%86%D9%82.exe
+- صفحة الإصدارات: `https://github.com/abooodHub/PingMonitor_SA/releases`
 
 ## المتطلبات
 - Windows 10 أو أحدث
@@ -35,4 +35,4 @@
 
 ## المصدر
 - المستودع: `https://github.com/abooodHub/PingMonitor_SA`
-- صفحة الهبوط: موجودة في `docs/index.html` ويمكن تفعيلها عبر
+- صفحة الهبوط: موجودة في `docs/index.html` ويمكن تفعيلها

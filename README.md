@@ -5,7 +5,8 @@
 ## التحميل
 - تنزيل مباشر للملف التنفيذي:
   - https://github.com/abooodHub/PingMonitor_SA/releases/download/v1.0.0/PingMonitor.SA.v1.exe
-- صفحة الإصدار: `https://github.com/abooodHub/PingMonitor_SA/releases/tag/v1.0.0`
+- صفحة الإصدارات:
+  - https://github.com/abooodHub/PingMonitor_SA/releases/
 
 ## المتطلبات
 - Windows 10 أو أحدث

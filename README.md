@@ -34,4 +34,4 @@
 
 ## المصدر
 - المستودع: `https://github.com/abooodHub/PingMonitor_SA`
-- صفحة الهبوط: موجودة في `docs/index.html` ويمكن تفعيلها عبر GitHub Pages.
+- صفحة الهبوط: موجودة في `docs/index.html` ويمكن تفعيلها عبر 

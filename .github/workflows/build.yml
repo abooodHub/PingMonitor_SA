@@ -1,0 +1,50 @@
+name: Windows build and tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build and test release packages
+        shell: powershell
+        run: ./scripts/Build.ps1 -Package -TestProfile CI
+      - name: Upload tested build
+        uses: actions/upload-artifact@v6
+        with:
+          name: PingMonitor-SA-ci
+          path: |
+            bin/Release/PingMonitor.SA.v1.exe
+            bin/Release/PingMonitor.SA.v1.exe.config
+          if-no-files-found: error
+          retention-days: 14
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'abooodHub/PingMonitor_SA'
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Rebuild and verify publishable packages
+        shell: powershell
+        run: ./scripts/Build.ps1 -Package -TestProfile CI
+      - name: Publish version if not already released
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: ./scripts/Publish-GitHubRelease.ps1

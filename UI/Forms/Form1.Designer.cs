@@ -11,6 +11,8 @@ namespace PingMonitor
         private ModernButton btnToggleTimer;
         private ModernButton btnChangeInterval;
         private ModernButton btnToggleLang;
+        private System.Windows.Forms.ComboBox cmbMonitorList;
+        private ModernButton btnManageMonitorLists;
         private System.Windows.Forms.FlowLayoutPanel pnlProviders;
         private System.Windows.Forms.ImageList imageListFlags;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -20,6 +22,13 @@ namespace PingMonitor
 
         protected override void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                isClosing = true;
+                updating = false;
+                CancelCurrentScan();
+                CancelWanIpRequest();
+            }
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -39,6 +48,8 @@ namespace PingMonitor
             this.btnToggleTimer = new ModernButton();
             this.btnChangeInterval = new ModernButton();
             this.btnToggleLang = new ModernButton();
+            this.cmbMonitorList = new System.Windows.Forms.ComboBox();
+            this.btnManageMonitorLists = new ModernButton();
             this.pnlProviders = new System.Windows.Forms.FlowLayoutPanel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblServerCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -128,9 +139,38 @@ namespace PingMonitor
             this.btnToggleLang.Location = new System.Drawing.Point(896, 15);
             this.btnToggleLang.Name = "btnToggleLang";
             this.btnToggleLang.Size = new System.Drawing.Size(90, 42);
-            this.btnToggleLang.TabIndex = 5;
+            this.btnToggleLang.TabIndex = 7;
             this.btnToggleLang.Text = "🌐 en";
             this.btnToggleLang.Click += new System.EventHandler(this.btnToggleLang_Click);
+            // 
+            // cmbMonitorList
+            // 
+            this.cmbMonitorList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbMonitorList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(43)))));
+            this.cmbMonitorList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cmbMonitorList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMonitorList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbMonitorList.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.cmbMonitorList.ForeColor = System.Drawing.Color.White;
+            this.cmbMonitorList.FormattingEnabled = true;
+            this.cmbMonitorList.ItemHeight = 25;
+            this.cmbMonitorList.Location = new System.Drawing.Point(450, 22);
+            this.cmbMonitorList.Name = "cmbMonitorList";
+            this.cmbMonitorList.Size = new System.Drawing.Size(265, 31);
+            this.cmbMonitorList.TabIndex = 5;
+            this.cmbMonitorList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cmbMonitorList_DrawItem);
+            this.cmbMonitorList.SelectedIndexChanged += new System.EventHandler(this.cmbMonitorList_SelectedIndexChanged);
+            // 
+            // btnManageMonitorLists
+            // 
+            this.btnManageMonitorLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnManageMonitorLists.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnManageMonitorLists.Location = new System.Drawing.Point(725, 15);
+            this.btnManageMonitorLists.Name = "btnManageMonitorLists";
+            this.btnManageMonitorLists.Size = new System.Drawing.Size(155, 42);
+            this.btnManageMonitorLists.TabIndex = 6;
+            this.btnManageMonitorLists.Text = "⚙ إدارة القوائم";
+            this.btnManageMonitorLists.Click += new System.EventHandler(this.btnManageMonitorLists_Click);
             // 
             // pnlProviders
             // 
@@ -188,12 +228,14 @@ namespace PingMonitor
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1000, 555);
             this.Controls.Add(this.lblWanIP);
             this.Controls.Add(this.pnlProviders);
+            this.Controls.Add(this.btnManageMonitorLists);
+            this.Controls.Add(this.cmbMonitorList);
             this.Controls.Add(this.btnToggleLang);
             this.Controls.Add(this.btnChangeInterval);
             this.Controls.Add(this.btnToggleTimer);

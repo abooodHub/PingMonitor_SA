@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PingMonitor SA.v1 — أداة مراقبة البنق</title>
+  <title>PingMonitor.SA.v1 — أداة مراقبة البنق</title>
   <style>
     :root{--bg:#121212;--fg:#ffffff;--muted:#aaaaaa;--card:#1b1b1b;--border:#2a2a2a;--accent:#00a0d0;--good:#28a745;--warn:#ff9800}
     *{box-sizing:border-box}
@@ -28,20 +28,24 @@
     .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
     .lightbox.active{display:flex}
     .lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;border:1px solid var(--border);background:#000}
+    @media(max-width:680px){.wrap{padding:20px}.grid,.shots{grid-template-columns:1fr}header{align-items:flex-start;gap:12px;flex-direction:column}h1{font-size:23px}}
+    @media(prefers-reduced-motion:reduce){.shots img{transition:none}.shots img:hover{transform:none}}
+    .shots img:focus-visible,.btn:focus-visible{outline:3px solid #70d5ff;outline-offset:4px}
   </style>
-  <meta name="description" content="PingMonitor SA.v1 — أداة لمراقبة البنق والجيتار وفقد البيانات مع واجهة حديثة.">
+  <meta name="description" content="PingMonitor.SA.v1 — أداة لمراقبة البنق وتذبذب التأخير وفقد الحزم مع واجهة حديثة.">
 </head>
 <body>
   <div class="wrap">
     <header>
-      <h1>PingMonitor SA.v1 — أداة مراقبة البنق</h1>
-      <span class="ver">v1</span>
+      <h1>PingMonitor.SA.v1 — أداة مراقبة البنق</h1>
+      <span class="ver">التحديث 1.3.0</span>
     </header>
 
     <section class="hero">
-      <p>تطبيق ويندوز لقياس البنق والجيتار وفقد البيانات لخوادم متعددة، مع دعم لغتين وعرض أعلام الدول وفرز النتائج.</p>
-      <a class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/download/v1.0.0/PingMonitor.SA.v1.exe" target="_blank">⬇️ تحميل مباشر</a>
-      <a class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/" target="_blank">📦 صفحة الإصدارات</a>
+      <p class="muted">حمّل الحزمة وفك الضغط ثم شغّل PingMonitor.SA.v1.exe. تُحفظ قوائمك داخل بيانات المستخدم تلقائيًا.</p>
+      <p>تطبيق ويندوز لقياس البنق وتذبذب التأخير وفقد الحزم لخوادم متعددة، مع دعم لغتين وعرض أعلام الدول وفرز النتائج.</p>
+      <a id="download" class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest" target="_blank" rel="noopener noreferrer">⬇️ آخر إصدار منشور</a>
+      <a class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/" target="_blank" rel="noopener noreferrer">📦 صفحة الإصدارات</a>
     </section>
 
     <div class="grid">
@@ -49,10 +53,14 @@
         <h2>المزايا</h2>
         <ul>
           <li>قياس البنق بشكل دوري مع ألوان دلالية</li>
-          <li>حساب الجيتار (Jitter) وفقد البيانات (Loss)</li>
+          <li>حساب تذبذب التأخير (Jitter) وفقد الحزم (Loss)</li>
           <li>تبديل اللغة عربي/إنجليزي</li>
-          <li>أعلام الدول وصفيحة مزوّدين قابلة للتصفية</li>
-          <li>فرز الأعمدة حسب القيم</li>
+          <li>أعلام الدول وشريط مزوّدين قابل للتصفية</li>
+          <li>إنشاء قوائم مراقبة مخصصة واختيار خوادمها حسب المزود أو المنطقة</li>
+          <li>بحث وفرز رقمي وتفاصيل الخادم مع رسم وتصدير CSV</li>
+          <li>استيراد وتصدير القوائم مع معاينة قبل الدمج</li>
+          <li>ملخص الجلسة وتنبيه اختياري بعد ثلاث محاولات ICMP بلا استجابة</li>
+          <li>دعم تكبير العرض وخيار تقليل الحركة</li>
           <li>أزرار حديثة بواجهة متدرجة ودعم الإيموجي</li>
         </ul>
       </div>
@@ -71,52 +79,70 @@
         <h2>طريقة الاستخدام</h2>
         <ul>
           <li>بعد التشغيل، اختر مزوّد الخدمة من الشريط العلوي</li>
-          <li>راقب البنق والجيتار وفقد البيانات في القائمة</li>
+          <li>راقب البنق وتذبذب التأخير وفقد الحزم في القائمة</li>
           <li>استخدم زر تغيير الفترة لضبط معدل التحديث</li>
           <li>بدّل اللغة من زر 🌐 أعلى اليمين</li>
         </ul>
       </div>
       <div class="card">
         <h2>المصدر</h2>
-        <p><a class="btn" href="https://github.com/abooodHub/PingMonitor_SA" target="_blank">المستودع على GitHub</a></p>
-        <p class="muted">فعّل GitHub Pages من إعدادات المستودع لاستخدام هذا الملف كصفحة هبوط.</p>
+        <p><a class="btn" href="https://github.com/abooodHub/PingMonitor_SA" target="_blank" rel="noopener noreferrer">المستودع على GitHub</a></p>
+        <p class="muted">تُحفظ القوائم داخل AppData في بيانات المستخدم. سجل القياسات مؤقت؛ يمكنك تصديره للاحتفاظ به.</p>
       </div>
     </div>
 
     <div class="card" style="margin-top:24px">
       <h2>لقطات الشاشة</h2>
+      <p class="muted">واجهة البرنامج ببيانات عرض توضيحية، وليست قياسات حية.</p>
       <div class="shots">
-        <img src="img/1-AR.png" alt="لقطة شاشة – الواجهة العربية" loading="lazy">
-        <img src="img/1-EN.png" alt="Screenshot – English UI" loading="lazy">
+        <img src="img/current-AR.png" alt="لقطة شاشة – الواجهة العربية" loading="lazy" tabindex="0" role="button" aria-label="تكبير الصورة">
+        <img src="img/current-EN.png" alt="Screenshot – English UI" loading="lazy" tabindex="0" role="button" aria-label="تكبير الصورة">
       </div>
     </div>
 
-    <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="عرض الصورة" tabindex="-1">
       <img id="lightbox-img" alt="">
     </div>
 
     <footer>
-      © PingMonitor SA.v1 — أداة مراقبة البنق
+      © PingMonitor.SA.v1 — أداة مراقبة البنق
     </footer>
   </div>
   <script>
+    // Keep a working releases-page fallback until the packaged release is available.
+    fetch('https://api.github.com/repos/abooodHub/PingMonitor_SA/releases/latest')
+      .then(response => { if (!response.ok) throw new Error('Release unavailable'); return response.json(); })
+      .then(release => {
+        const asset = (release.assets || []).find(item => item.name === 'PingMonitor.SA.v1.zip');
+        if (asset && asset.browser_download_url.startsWith('https://github.com/abooodHub/PingMonitor_SA/releases/download/')) {
+          const download = document.getElementById('download');
+          download.href = asset.browser_download_url;
+          download.textContent = '⬇️ تحميل PingMonitor.SA.v1';
+        }
+      }).catch(() => {});
+
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
+    let previousFocus;
     document.querySelectorAll('.shots img').forEach(img=>{
+      img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();img.click();}});
       img.addEventListener('click',()=>{
+        previousFocus = img;
         lbImg.src = img.src;
         lbImg.alt = img.alt || '';
         lb.classList.add('active');
         lb.setAttribute('aria-hidden','false');
+        lb.focus();
       });
     });
     function closeLb(){
       lb.classList.remove('active');
       lb.setAttribute('aria-hidden','true');
       lbImg.removeAttribute('src');
+      if(previousFocus) previousFocus.focus();
     }
     lb.addEventListener('click', (e)=>{ if (e.target === lb) closeLb(); });
-    document.addEventListener('keydown',(e)=>{ if (e.key === 'Escape') closeLb(); });
+    document.addEventListener('keydown',(e)=>{ if (e.key === 'Escape' && lb.classList.contains('active')) closeLb(); if(e.key==='Tab' && lb.classList.contains('active')){e.preventDefault();lb.focus();} });
   </script>
 </body>
 </html>

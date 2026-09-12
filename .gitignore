@@ -16,3 +16,12 @@ _ReSharper*/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local builds, release bundles, comparison snapshots and test output
+release/
+artifacts/
+publish/
+tests/*.png
+tests/.regression-*/
+tests/.motion-*/
+tests/.provider-switch-*/

@@ -2,147 +2,216 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PingMonitor.SA.v1 — أداة مراقبة البنق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>PingMonitor.SA.v1 — راقب اتصالك بوضوح</title>
+  <meta name="description" content="حمّل PingMonitor.SA.v1 لويندوز. راقب البنق والتذبذب وفقد الحزم، وأنشئ قوائمك الخاصة بواجهة داكنة تدعم العربية والإنجليزية.">
+  <link rel="canonical" href="https://abooodhub.github.io/PingMonitor_SA/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:title" content="PingMonitor.SA.v1 — راقب اتصالك بوضوح">
+  <meta property="og:description" content="مراقبة البنق والتذبذب وفقد الحزم. قوائم مخصصة، تقارير CSV وواجهة عربية وإنجليزية.">
+  <meta property="og:url" content="https://abooodhub.github.io/PingMonitor_SA/">
+  <meta property="og:image" content="https://abooodhub.github.io/PingMonitor_SA/img/current-AR.png">
+  <meta property="og:image:alt" content="واجهة PingMonitor.SA.v1 بالعربية ببيانات توضيحية">
+  <meta name="twitter:card" content="summary_large_image">
   <style>
-    :root{--bg:#121212;--fg:#ffffff;--muted:#aaaaaa;--card:#1b1b1b;--border:#2a2a2a;--accent:#00a0d0;--good:#28a745;--warn:#ff9800}
+    :root{--bg:#101214;--panel:#181c20;--panel-soft:#14181b;--line:#2c343a;--text:#f3f6f8;--muted:#acbac4;--accent:#67d7ff;--green:#88dda9;--radius:18px}
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--fg);font-family:Segoe UI,Segoe UI Emoji,Arial,sans-serif}
-    .wrap{max-width:960px;margin:0 auto;padding:40px}
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-    h1{font-size:28px;margin:0}
-    .ver{color:var(--muted);font-size:14px}
-    .hero{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-    .hero p{line-height:1.8;margin:8px 0}
-    .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;margin-top:14px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
-    .card h2{margin:0 0 8px}
-    ul{margin:0;padding-inline-start:18px}
-    li{margin:6px 0}
-    .muted{color:var(--muted);font-size:14px}
-    footer{margin-top:32px;color:var(--muted);font-size:13px}
-    .shots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .shots img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);cursor:zoom-in;transition:transform .2s}
-    .shots img:hover{transform:scale(1.02)}
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
-    .lightbox.active{display:flex}
-    .lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;border:1px solid var(--border);background:#000}
-    @media(max-width:680px){.wrap{padding:20px}.grid,.shots{grid-template-columns:1fr}header{align-items:flex-start;gap:12px;flex-direction:column}h1{font-size:23px}}
-    @media(prefers-reduced-motion:reduce){.shots img{transition:none}.shots img:hover{transform:none}}
-    .shots img:focus-visible,.btn:focus-visible{outline:3px solid #70d5ff;outline-offset:4px}
+    html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.8}
+    body.modal-open{overflow:hidden}
+    a{color:var(--accent);text-underline-offset:5px}
+    button{font:inherit}
+    button,a{-webkit-tap-highlight-color:transparent}
+    :focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+    .container{width:min(1120px,calc(100% - 48px));margin-inline:auto}
+    .skip{position:absolute;top:8px;right:24px;padding:10px 18px;background:var(--text);color:var(--bg);z-index:10;transform:translateY(-160%)}
+    .skip:focus{transform:translateY(0)}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:25px;border-bottom:1px solid var(--line)}
+    .brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-size:18px;font-weight:700;white-space:nowrap}
+    .brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#103446;color:var(--accent);border:1px solid #285469}
+    .brand-mark svg{width:25px;height:25px}
+    nav{display:flex;align-items:center;gap:26px;font-size:14px}
+    nav a{color:var(--muted);text-decoration:none}
+    nav a:hover,footer a:hover{color:var(--text)}
+    .hero{text-align:center;padding:70px 0 36px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--green);background:#192b22;border:1px solid #2e4d3b;border-radius:30px;padding:4px 13px;font-size:13px}
+    .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+    h1{font-size:clamp(34px,5.5vw,62px);line-height:1.35;letter-spacing:-1px;margin:22px 0 16px;font-weight:750}
+    h1 span{color:var(--accent)}
+    .lead{max-width:665px;margin:0 auto;color:var(--muted);font-size:18px}
+    .actions{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 22px;text-decoration:none;font-weight:600;font-size:15px;background:var(--panel);color:var(--text);transition:background .18s,transform .18s}
+    .button:hover{background:#253039;transform:translateY(-2px)}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:#09212b}
+    .button.primary:hover{background:#9ce5ff}
+    .button svg{width:19px;height:19px}
+    .requirements{color:var(--muted);font-size:13px;margin:14px 0 0}
+    .preview{margin:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);overflow:hidden;box-shadow:0 24px 90px #0005}
+    .preview-bar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;gap:14px}
+    .preview-label{color:var(--muted);font-size:13px;display:flex;gap:9px;align-items:center}
+    .preview-label::before{content:"";background:var(--green);width:6px;height:6px;border-radius:50%}
+    .language-switch{display:flex;gap:5px;padding:4px;background:var(--bg);border:1px solid var(--line);border-radius:9px}
+    .language-switch button{cursor:pointer;border:0;border-radius:6px;color:var(--muted);background:transparent;font-size:13px;padding:5px 15px;min-height:34px}
+    .language-switch button[aria-pressed="true"]{color:var(--text);background:#303941}
+    .screenshot-link{display:block;margin:0 14px;color:inherit;cursor:zoom-in}
+    .screenshot-link img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+    figcaption{padding:12px 20px;text-align:center;font-size:12px;color:var(--muted)}
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);padding:28px 0;margin-top:16px;border-bottom:1px solid var(--line)}
+    .fact{text-align:center;padding:4px 12px}
+    .fact+.fact{border-inline-start:1px solid var(--line)}
+    .fact strong{font-size:26px;font-weight:650;line-height:1.3;display:block}
+    .fact span{font-size:13px;color:var(--muted)}
+    section.content{padding-top:72px}
+    .section-heading{margin-bottom:26px}
+    .section-heading .label{color:var(--accent);font-size:13px;font-weight:600}
+    h2{font-size:clamp(25px,3vw,34px);line-height:1.4;margin:8px 0 10px}
+    .section-heading p{color:var(--muted);margin:0;max-width:690px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--panel-soft);border:1px solid var(--line);border-radius:var(--radius);padding:25px}
+    .card .number{color:var(--accent);font-size:12px;font-weight:600;letter-spacing:2px}
+    h3{font-size:18px;margin:12px 0 7px;line-height:1.5}
+    .card p{color:var(--muted);font-size:14px;margin:0}
+    .providers{margin:20px 0 0;color:var(--muted);font-size:13px;line-height:2}
+    .providers b{color:var(--text);font-weight:500}
+    .setup{display:grid;grid-template-columns:1.05fr 1.4fr;gap:50px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:36px}
+    .setup .section-heading{margin:0}
+    .setup .requirements{margin-top:20px}
+    .setup .release-link{margin-top:20px;font-size:14px}
+    .steps{list-style:none;padding:0;margin:0;counter-reset:step}
+    .steps li{position:relative;padding-inline-start:53px;counter-increment:step}
+    .steps li+li{margin-top:25px}
+    .steps li::before{content:counter(step,decimal-leading-zero);position:absolute;inset-inline-start:0;top:0;border:1px solid #375464;background:#1a303b;color:var(--accent);width:34px;height:34px;border-radius:10px;text-align:center;line-height:32px;font-size:13px}
+    .steps h3{margin:0 0 4px;font-size:16px}
+    .steps p{margin:0;color:var(--muted);font-size:14px}
+    code{font-family:Consolas,monospace;font-size:.9em;direction:ltr;unicode-bidi:isolate;overflow-wrap:anywhere;color:#dce9f0}
+    .faq-layout{display:grid;grid-template-columns:.8fr 1.4fr;gap:50px}
+    .faq-list{border-top:1px solid var(--line)}
+    details{border-bottom:1px solid var(--line);padding:19px 0}
+    summary{cursor:pointer;font-weight:600;font-size:16px;padding-inline-end:8px}
+    summary::marker{color:var(--accent)}
+    details p{font-size:14px;color:var(--muted);margin:12px 0 0;line-height:1.95}
+    .closing{margin-top:72px;padding:32px 36px;border:1px solid #2d5263;border-radius:var(--radius);background:#14252e;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .closing h2{font-size:25px;margin:0 0 4px}
+    .closing p{margin:0;color:var(--muted);font-size:14px}
+    .closing .button{flex-shrink:0}
+    footer{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:46px;padding:25px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+    footer .links{display:flex;gap:20px;flex-wrap:wrap}
+    footer a{color:var(--muted);text-decoration:none}
+    dialog{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--text);width:min(1240px,96vw);max-height:94vh}
+    dialog::backdrop{background:#000d}
+    .dialog-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+    .dialog-bar h2{font-size:15px;margin:0}
+    .dialog-bar button{cursor:pointer;background:#303941;border:1px solid #46545e;border-radius:7px;padding:5px 15px;color:var(--text);min-height:36px}
+    dialog img{display:block;width:100%;height:auto;max-height:76vh;object-fit:contain}
+    @media(min-width:761px) and (prefers-reduced-motion:no-preference){.hero{animation:arrive .6s ease-out}.preview{animation:arrive .8s ease-out}@keyframes arrive{from{opacity:.3;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}}
+    @media(max-width:900px){.features{grid-template-columns:repeat(2,1fr)}.setup,.faq-layout{gap:28px}.brand{font-size:16px}nav{gap:18px}}
+    @media(max-width:680px){.container{width:calc(100% - 32px)}.header{flex-wrap:wrap;justify-content:center;gap:14px;padding-block:18px}nav{gap:24px;font-size:13px}.hero{padding-top:42px}.lead{font-size:16px}h1{letter-spacing:0}.actions{gap:10px}.button{padding:10px 16px}.preview-bar{padding:10px;flex-wrap:wrap}.preview-label{font-size:12px}.language-switch button{padding:4px 12px}.screenshot-link{margin:0 7px}figcaption{padding:9px 12px}.fact strong{font-size:22px}.fact span{font-size:12px}.features,.setup,.faq-layout{grid-template-columns:1fr}.card{padding:22px}.setup{padding:25px}.section-heading{margin-bottom:20px}section.content{padding-top:48px}.closing{flex-direction:column;align-items:flex-start;margin-top:48px;padding:25px}footer{align-items:flex-start;flex-direction:column}.facts{padding:22px 0}.faq-layout{gap:0}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.button:hover{transform:none}}
   </style>
-  <meta name="description" content="PingMonitor.SA.v1 — أداة لمراقبة البنق وتذبذب التأخير وفقد الحزم مع واجهة حديثة.">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>PingMonitor.SA.v1 — أداة مراقبة البنق</h1>
-      <span class="ver">التحديث 1.3.0</span>
+  <a class="skip" href="#main">انتقل إلى المحتوى</a>
+  <div class="container">
+    <header class="header">
+      <a class="brand" href="./" aria-label="PingMonitor.SA.v1 — الرئيسية"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l3-8 4 16 3-8h5"/></svg></span><bdi>PingMonitor.SA.v1</bdi></a>
+      <nav aria-label="التنقل الرئيسي"><a href="#features">المزايا</a><a href="#start">طريقة التشغيل</a><a href="https://github.com/abooodHub/PingMonitor_SA">GitHub ↗</a></nav>
     </header>
-
-    <section class="hero">
-      <p class="muted">حمّل الحزمة وفك الضغط ثم شغّل PingMonitor.SA.v1.exe. تُحفظ قوائمك داخل بيانات المستخدم تلقائيًا.</p>
-      <p>تطبيق ويندوز لقياس البنق وتذبذب التأخير وفقد الحزم لخوادم متعددة، مع دعم لغتين وعرض أعلام الدول وفرز النتائج.</p>
-      <a id="download" class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest" target="_blank" rel="noopener noreferrer">⬇️ آخر إصدار منشور</a>
-      <a class="btn" href="https://github.com/abooodHub/PingMonitor_SA/releases/" target="_blank" rel="noopener noreferrer">📦 صفحة الإصدارات</a>
-    </section>
-
-    <div class="grid">
-      <div class="card">
-        <h2>المزايا</h2>
-        <ul>
-          <li>قياس البنق بشكل دوري مع ألوان دلالية</li>
-          <li>حساب تذبذب التأخير (Jitter) وفقد الحزم (Loss)</li>
-          <li>تبديل اللغة عربي/إنجليزي</li>
-          <li>أعلام الدول وشريط مزوّدين قابل للتصفية</li>
-          <li>إنشاء قوائم مراقبة مخصصة واختيار خوادمها حسب المزود أو المنطقة</li>
-          <li>بحث وفرز رقمي وتفاصيل الخادم مع رسم وتصدير CSV</li>
-          <li>استيراد وتصدير القوائم مع معاينة قبل الدمج</li>
-          <li>ملخص الجلسة وتنبيه اختياري بعد ثلاث محاولات ICMP بلا استجابة</li>
-          <li>دعم تكبير العرض وخيار تقليل الحركة</li>
-          <li>أزرار حديثة بواجهة متدرجة ودعم الإيموجي</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>المتطلبات</h2>
-        <ul>
-          <li>.NET Framework 4.7.2</li>
-          <li>ويندوز 10 أو أحدث</li>
-        </ul>
-        <p class="muted">إن لم يكن .NET 4.7.2 مثبتًا، ثبّته أولًا ثم شغّل البرنامج.</p>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>طريقة الاستخدام</h2>
-        <ul>
-          <li>بعد التشغيل، اختر مزوّد الخدمة من الشريط العلوي</li>
-          <li>راقب البنق وتذبذب التأخير وفقد الحزم في القائمة</li>
-          <li>استخدم زر تغيير الفترة لضبط معدل التحديث</li>
-          <li>بدّل اللغة من زر 🌐 أعلى اليمين</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>المصدر</h2>
-        <p><a class="btn" href="https://github.com/abooodHub/PingMonitor_SA" target="_blank" rel="noopener noreferrer">المستودع على GitHub</a></p>
-        <p class="muted">تُحفظ القوائم داخل AppData في بيانات المستخدم. سجل القياسات مؤقت؛ يمكنك تصديره للاحتفاظ به.</p>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:24px">
-      <h2>لقطات الشاشة</h2>
-      <p class="muted">واجهة البرنامج ببيانات عرض توضيحية، وليست قياسات حية.</p>
-      <div class="shots">
-        <img src="img/current-AR.png" alt="لقطة شاشة – الواجهة العربية" loading="lazy" tabindex="0" role="button" aria-label="تكبير الصورة">
-        <img src="img/current-EN.png" alt="Screenshot – English UI" loading="lazy" tabindex="0" role="button" aria-label="تكبير الصورة">
-      </div>
-    </div>
-
-    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="عرض الصورة" tabindex="-1">
-      <img id="lightbox-img" alt="">
-    </div>
-
-    <footer>
-      © PingMonitor.SA.v1 — أداة مراقبة البنق
-    </footer>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <span class="eyebrow">متاح لويندوز · التحديث 1.3.0</span>
+        <h1 id="hero-title">راقب اتصالك.<br><span>وافهم كل نتيجة.</span></h1>
+        <p class="lead">البنق، تذبذب التأخير وفقد الحزم في واجهة واحدة. اختر خوادمك، أنشئ قوائمك، وتابع التفاصيل بالعربية أو الإنجليزية.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>تحميل البرنامج <bdi>ZIP</bdi></a>
+          <a class="button" href="#start">طريقة التشغيل <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="requirements"><bdi>Windows 10+</bdi> · <bdi>.NET Framework 4.7.2</bdi> · تشغيل بعد فك الضغط</p>
+      </section>
+      <figure class="preview">
+        <div class="preview-bar"><span class="preview-label">من داخل البرنامج</span><div class="language-switch" role="group" aria-label="لغة لقطة الشاشة"><button type="button" aria-pressed="true" data-language="ar">العربية</button><button type="button" aria-pressed="false" data-language="en" lang="en">English</button></div></div>
+        <a class="screenshot-link" id="preview-link" href="img/current-AR.png" aria-label="تكبير لقطة الواجهة العربية"><img id="preview-image" src="img/current-AR.png" alt="واجهة PingMonitor.SA.v1 العربية، تعرض المزودين وقائمة الخوادم وقياسات البنق والتذبذب والفقد" width="1016" height="594" fetchpriority="high"></a>
+        <figcaption>بيانات عرض توضيحية وليست قياسات حيّة. اضغط على الصورة لتكبيرها.</figcaption>
+      </figure>
+      <noscript><p><a href="img/current-EN.png">شاهد لقطة الواجهة الإنجليزية</a></p></noscript>
+      <div class="facts" aria-label="نظرة سريعة"><div class="fact"><strong>59</strong><span>عنوان خادم فريد</span></div><div class="fact"><strong><bdi>AR / EN</bdi></strong><span>واجهتان بلغتك</span></div><div class="fact"><strong>CSV</strong><span>تصدير النتائج</span></div></div>
+      <section id="features" class="content" aria-labelledby="features-title">
+        <div class="section-heading"><span class="label">أدوات المراقبة</span><h2 id="features-title">كل ما تحتاجه لمتابعة خوادمك</h2><p>من نظرة سريعة على النتائج إلى تفاصيل كل خادم، بأدوات واضحة وقوائم تناسب استخدامك.</p></div>
+        <div class="features">
+          <article class="card"><span class="number" aria-hidden="true">01 / MONITOR</span><h3>قياسات تصل أولًا بأول</h3><p>تابع البنق والتذبذب وفقد الحزم، مع تنفيذ ما يصل إلى 8 طلبات بالتزامن وعرض النتائج أثناء وصولها.</p></article>
+          <article class="card"><span class="number" aria-hidden="true">02 / ORGANIZE</span><h3>قوائم على طريقتك</h3><p>اختر المزودين أو أنشئ قائمة مخصصة. استورد قوائمك وصدّرها، مع معاينة قبل دمج أي قائمة جديدة.</p></article>
+          <article class="card"><span class="number" aria-hidden="true">03 / EXPLORE</span><h3>تفاصيل وراء الأرقام</h3><p>انقر مرتين على الخادم لعرض رسم آخر 180 نتيجة، أو ابحث بالمدينة والمزود والعنوان ورتّب الأعمدة.</p></article>
+          <article class="card"><span class="number" aria-hidden="true">04 / EXPORT</span><h3>نتائج تحتفظ بها</h3><p>صدّر بيانات الخادم أو ملخص الجلسة إلى CSV، لمراجعة النتائج ومقارنتها بعد انتهاء المراقبة.</p></article>
+          <article class="card"><span class="number" aria-hidden="true">05 / NOTIFY</span><h3>تنبيه عند الحاجة</h3><p>فعّل تنبيهات Windows الاختيارية بعد ثلاث محاولات ICMP متتالية بلا رد. التنبيهات معطلة افتراضيًا.</p></article>
+          <article class="card"><span class="number" aria-hidden="true">06 / PERSONALIZE</span><h3>واجهة تتذكر تفضيلاتك</h3><p>العربية والإنجليزية، حفظ حجم النافذة والأعمدة، ودعم تكبير العرض مع حركات خفيفة وخيار لتقليلها.</p></article>
+        </div>
+        <p class="providers"><b>خيارات المزودين والمناطق:</b> STC · موبايلي · زين · سلام · GO · Amazon · الشرق الأوسط</p>
+      </section>
+      <section id="start" class="content" aria-labelledby="start-title">
+        <div class="setup">
+          <div class="section-heading"><span class="label">بداية بسيطة</span><h2 id="start-title">حمّل، فك الضغط،<br>وابدأ المراقبة.</h2><p>البرنامج جاهز للتشغيل من الحزمة، دون معالج تثبيت.</p><p class="requirements">المتطلبات: Windows 10 أو أحدث<br>و.NET Framework 4.7.2</p><p class="release-link"><a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest">تفاصيل الإصدار وملفات التحميل ↗</a></p></div>
+          <ol class="steps">
+            <li><h3>حمّل حزمة البرنامج</h3><p>اختر <a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip"><bdi>PingMonitor.SA.v1.zip</bdi></a>، ثم فك الضغط عن جميع محتوياتها في مجلد تختاره.</p></li>
+            <li><h3>شغّل الملف التنفيذي</h3><p>افتح <code>PingMonitor.SA.v1.exe</code>، وأبقِ ملف <code>PingMonitor.SA.v1.exe.config</code> بجواره.</p></li>
+            <li><h3>اختر ما تريد مراقبته</h3><p>حدّد المزودين من الأعلى، أو افتح «إدارة القوائم». لتفاصيل أكثر، انقر مرتين على أي خادم.</p></li>
+          </ol>
+        </div>
+      </section>
+      <section id="faq" class="content" aria-labelledby="faq-title">
+        <div class="faq-layout">
+          <div class="section-heading"><span class="label">قبل أن تبدأ</span><h2 id="faq-title">أسئلة شائعة</h2><p>عن الحفظ والقياسات والاستخدام اليومي.</p></div>
+          <div class="faq-list">
+            <details><summary>أين تُحفظ قوائمي؟</summary><p>داخل <code>%LOCALAPPDATA%\PingMonitor.SA</code> في مجلد AppData المخفي افتراضيًا، بعيدًا عن ملف EXE. يمكنك فتح مجلد البيانات من «حول البرنامج» عبر F1. تُحفظ القوائم وتفضيلات العرض تلقائيًا مع نسخة احتياطية لملف البيانات.</p></details>
+            <details><summary>هل تُحفظ القياسات بعد إغلاق البرنامج؟</summary><p>القياسات تبقى في الذاكرة أثناء الجلسة فقط. لحفظها، صدّر بيانات الخادم من نافذة التفاصيل أو ملخص الجلسة من قائمة «أدوات» إلى CSV.</p></details>
+            <details><summary>هل عدم الرد يعني انقطاع الإنترنت؟</summary><p>ليس بالضرورة؛ قد يمنع الخادم طلبات ICMP. افتح التفاصيل لمعرفة سبب آخر فشل. نسبة الفقد تعتمد على آخر 20 محاولة ICMP، ولا تشمل أخطاء DNS أو التنفيذ.</p></details>
+            <details><summary>هل البحث يوقف مراقبة الخوادم المخفية؟</summary><p>البحث يغيّر الصفوف المعروضة فقط. تستمر مراقبة الخوادم المحددة حتى إذا لم تظهر ضمن نتائج البحث.</p></details>
+            <details><summary>كيف أقلّل الحركة أو أستخدم الاختصارات؟</summary><p><bdi>Ctrl+Shift+M</bdi> يبدّل تقليل الحركة، و<bdi>Ctrl+F</bdi> ينقلك للبحث، و<bdi>Ctrl+C</bdi> ينسخ عنوان الخادم المحدد. استخدم F5 للتحديث وF1 لفتح «حول البرنامج».</p></details>
+          </div>
+        </div>
+      </section>
+      <aside class="closing" aria-label="تحميل البرنامج"><div><h2>قائمتك جاهزة للمراقبة.</h2><p>ابدأ بالخوادم المدمجة، ثم رتّب قوائمك كما يناسبك.</p></div><a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip">تحميل <bdi>PingMonitor.SA.v1</bdi> <span aria-hidden="true">↓</span></a></aside>
+    </main>
+    <footer><span><bdi>PingMonitor.SA.v1</bdi> · تطوير <a href="https://github.com/abooodHub">abooodHub</a></span><div class="links"><a href="https://github.com/abooodHub/PingMonitor_SA#readme">دليل الاستخدام</a><a href="https://github.com/abooodHub/PingMonitor_SA/blob/main/CHANGELOG.md">سجل التغييرات</a><a href="https://github.com/abooodHub/PingMonitor_SA/issues">الإبلاغ عن مشكلة</a></div></footer>
   </div>
+  <dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-bar"><h2 id="dialog-title">واجهة البرنامج</h2><button id="close-dialog" type="button" autofocus>إغلاق ×</button></div><img id="dialog-image" alt=""></dialog>
   <script>
-    // Keep a working releases-page fallback until the packaged release is available.
-    fetch('https://api.github.com/repos/abooodHub/PingMonitor_SA/releases/latest')
-      .then(response => { if (!response.ok) throw new Error('Release unavailable'); return response.json(); })
-      .then(release => {
-        const asset = (release.assets || []).find(item => item.name === 'PingMonitor.SA.v1.zip');
-        if (asset && asset.browser_download_url.startsWith('https://github.com/abooodHub/PingMonitor_SA/releases/download/')) {
-          const download = document.getElementById('download');
-          download.href = asset.browser_download_url;
-          download.textContent = '⬇️ تحميل PingMonitor.SA.v1';
-        }
-      }).catch(() => {});
-
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightbox-img');
-    let previousFocus;
-    document.querySelectorAll('.shots img').forEach(img=>{
-      img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();img.click();}});
-      img.addEventListener('click',()=>{
-        previousFocus = img;
-        lbImg.src = img.src;
-        lbImg.alt = img.alt || '';
-        lb.classList.add('active');
-        lb.setAttribute('aria-hidden','false');
-        lb.focus();
+    const preview = document.getElementById('preview-image');
+    const previewLink = document.getElementById('preview-link');
+    const screenshots = {
+      ar: { src: 'img/current-AR.png', alt: 'واجهة PingMonitor.SA.v1 العربية، تعرض المزودين وقائمة الخوادم وقياسات البنق والتذبذب والفقد', label: 'تكبير لقطة الواجهة العربية' },
+      en: { src: 'img/current-EN.png', alt: 'واجهة PingMonitor.SA.v1 الإنجليزية، تعرض المزودين وقائمة الخوادم وقياسات البنق والتذبذب والفقد', label: 'تكبير لقطة الواجهة الإنجليزية' }
+    };
+    document.querySelectorAll('[data-language]').forEach(button => {
+      button.addEventListener('click', () => {
+        const shot = screenshots[button.dataset.language];
+        preview.src = shot.src;
+        preview.alt = shot.alt;
+        previewLink.href = shot.src;
+        previewLink.setAttribute('aria-label', shot.label);
+        document.querySelectorAll('[data-language]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
       });
     });
-    function closeLb(){
-      lb.classList.remove('active');
-      lb.setAttribute('aria-hidden','true');
-      lbImg.removeAttribute('src');
-      if(previousFocus) previousFocus.focus();
-    }
-    lb.addEventListener('click', (e)=>{ if (e.target === lb) closeLb(); });
-    document.addEventListener('keydown',(e)=>{ if (e.key === 'Escape' && lb.classList.contains('active')) closeLb(); if(e.key==='Tab' && lb.classList.contains('active')){e.preventDefault();lb.focus();} });
+    const dialog = document.getElementById('image-dialog');
+    const dialogImage = document.getElementById('dialog-image');
+    previewLink.addEventListener('click', event => {
+      if (typeof dialog.showModal !== 'function' || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      dialogImage.src = preview.src;
+      dialogImage.alt = preview.alt;
+      dialog.showModal();
+      document.body.classList.add('modal-open');
+    });
+    document.getElementById('close-dialog').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      previewLink.focus({ preventScroll: true });
+    });
   </script>
 </body>
 </html>

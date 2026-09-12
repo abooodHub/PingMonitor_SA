@@ -1,16 +1,13 @@
 using System;
-using System.Windows.Forms;
 
 namespace PingMonitor
 {
     static class Program
     {
         [STAThread]
-        static void Main()
+        static int Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            return RuntimeBootstrap.Run(args);
         }
     }
 }

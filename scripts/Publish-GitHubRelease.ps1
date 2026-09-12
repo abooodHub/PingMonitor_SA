@@ -13,11 +13,11 @@ if ($matching.Count -gt 0) {
     Write-Host "$tag is already published; existing assets are preserved."
     return
 }
-$upload = Join-Path $root 'artifacts\release-upload'
+$upload = Join-Path $root ('artifacts\release-upload-' + [Guid]::NewGuid().ToString('N'))
 [void][IO.Directory]::CreateDirectory($upload)
 Copy-Item -LiteralPath (Join-Path $root "release\PingMonitor-SA-$number.zip") -Destination (Join-Path $upload 'PingMonitor.SA.v1.zip')
 Copy-Item -LiteralPath (Join-Path $root "release\PingMonitor-SA-$number-source.zip") -Destination $upload
-foreach ($name in @('PingMonitor.SA.v1.exe', 'PingMonitor.SA.v1.exe.config')) { Copy-Item -LiteralPath (Join-Path $root "bin\Release\$name") -Destination $upload }
+Copy-Item -LiteralPath (Join-Path $root 'bin\Release\PingMonitor.SA.v1.exe') -Destination $upload
 $hashes = Get-ChildItem -LiteralPath $upload -File | ForEach-Object { '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name }
 $hashes | Set-Content -LiteralPath (Join-Path $upload 'SHA256SUMS.txt') -Encoding ascii
 $assets = @(Get-ChildItem -LiteralPath $upload -File | ForEach-Object FullName)

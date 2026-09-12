@@ -8,9 +8,8 @@ Expand-Archive -LiteralPath $PackagePath -DestinationPath $isolated
 $executables = @(Get-ChildItem -LiteralPath $isolated -Recurse -Filter 'PingMonitor.SA.v1.exe')
 if ($executables.Count -ne 1) { throw 'Expected exactly one executable.' }
 $exe = $executables[0].FullName
-if (-not (Test-Path -LiteralPath ($exe + '.config'))) { throw 'Missing runtime configuration.' }
-[xml]$config = Get-Content -LiteralPath ($exe + '.config')
-if ($config.configuration.'System.Windows.Forms.ApplicationConfigurationSection'.add.value -ne 'PerMonitorV2') { throw 'Missing DPI configuration.' }
+if (@(Get-ChildItem -LiteralPath $isolated -Recurse -Filter '*.config').Count) { throw 'Runtime package must not contain external configuration files.' }
+& (Join-Path $PSScriptRoot 'Run-SingleFileTests.ps1') -ExecutablePath $exe
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $principal = [Security.Principal.WindowsPrincipal]::new($identity)
 Write-Output ('Elevated process: ' + $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
@@ -31,4 +30,4 @@ try {
     if ($store.Load([string[]][PingMonitor.ServerCatalog]::Create().Id).Lists.Count -ne 1) { throw 'Packaged storage round-trip failed.' }
 }
 finally { $form.Dispose() }
-Write-Output 'PASS: extracted runtime assembly, configuration, WinForms resources and isolated user-data round-trip. This is not a fresh OS or real multi-monitor DPI test.'
+Write-Output 'PASS: extracted EXE-only runtime, embedded startup configuration, WinForms resources and isolated user-data round-trip. This is not a fresh OS or real multi-monitor DPI test.'

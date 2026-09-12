@@ -6,9 +6,9 @@
 
 تطبيق Windows بواجهة داكنة، يدعم العربية والإنجليزية وقوائم المراقبة المخصصة.
 
-**[تحميل البرنامج ZIP](https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip)** · **[الموقع الرسمي](https://abooodhub.github.io/PingMonitor_SA/)** · [تفاصيل الإصدار](https://github.com/abooodHub/PingMonitor_SA/releases/latest)
+**[تحميل البرنامج EXE](https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.exe)** · [حزمة ZIP](https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip) · **[الموقع الرسمي](https://abooodhub.github.io/PingMonitor_SA/)** · [تفاصيل الإصدار](https://github.com/abooodHub/PingMonitor_SA/releases/latest)
 
-Windows 10+ · .NET Framework 4.7.2 · التحديث 1.3.0
+Windows 10+ · .NET Framework 4.7.2 · التحديث 1.3.1 · ملف EXE واحد
 
 ![واجهة PingMonitor.SA.v1 بالعربية](docs/img/current-AR.png)
 
@@ -18,11 +18,13 @@ Windows 10+ · .NET Framework 4.7.2 · التحديث 1.3.0
 
 ## ابدأ بثلاث خطوات
 
-1. [حمّل حزمة البرنامج](https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip) وفك الضغط عنها بالكامل.
-2. شغّل `PingMonitor.SA.v1.exe` وأبقِ ملف `PingMonitor.SA.v1.exe.config` بجواره.
+1. [حمّل ملف البرنامج](https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.exe)، أو فك ضغط حزمة ZIP الاختيارية.
+2. شغّل `PingMonitor.SA.v1.exe` مباشرة؛ لا تحتاج إلى ملف `.exe.config` بجواره.
 3. اختر المزودين من الشريط العلوي، أو أنشئ قائمتك من **إدارة القوائم**، ثم تابع النتائج.
 
-يتطلب Windows 10 أو أحدث و.NET Framework 4.7.2. لا تحتاج الحزمة إلى معالج تثبيت. تُحفظ قوائمك وتفضيلات العرض داخل بيانات المستخدم، بعيدًا عن مجلد البرنامج.
+يتطلب Windows 10 أو أحدث و.NET Framework 4.7.2. لا يحتاج البرنامج إلى معالج تثبيت. إعداد التشغيل مضمّن داخل EXE ويُجهّز تلقائيًا في AppData؛ يلزم وجود .NET Framework على الجهاز. تُحفظ قوائمك وتفضيلات العرض داخل بيانات المستخدم، بعيدًا عن مجلد البرنامج.
+
+**للتحديث من 1.3.0:** أغلق البرنامج واستبدل EXE في المجلد نفسه. يمكنك حذف `.exe.config` القديم؛ ملف قوائمك محفوظ داخل AppData.
 
 ## ماذا يقدم البرنامج؟
 
@@ -68,7 +70,7 @@ Windows 10+ · .NET Framework 4.7.2 · التحديث 1.3.0
 
 تُحفظ القوائم وتفضيلات العرض في `%LOCALAPPDATA%\PingMonitor.SA\server-lists.v1.xml` داخل AppData المخفي افتراضيًا، وليس بجوار EXE. توجد نسخة احتياطية للاستعادة عند تلف الملف، ويمكن فتح مجلد البيانات من نافذة «حول البرنامج».
 
-يُحفظ معدل التحديث واختيارات المزودين عبر إعدادات مستخدم Windows. تصدير القوائم يتضمن أسماء القوائم ومعرّفات خوادمها فقط، دون بيانات الجلسة أو التفضيلات.
+يُحفظ معدل التحديث واختيارات المزودين عبر إعدادات مستخدم Windows. يحتفظ التطبيق بإعداد التشغيل الداخلي في `%LOCALAPPDATA%\PingMonitor.SA\Runtime` ويصلحه تلقائيًا إذا تلف. نقل EXE إلى مجلد مختلف قد يغيّر موقع إعدادات .NET؛ يظل ملف القوائم في مساره الثابت. تصدير القوائم يتضمن أسماء القوائم ومعرّفات خوادمها فقط، دون بيانات الجلسة أو التفضيلات.
 
 </details>
 
@@ -102,6 +104,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Build.ps1 -Package
 
 تُنشأ الحزم في `release/`، وهو مستبعد من ملفات المصدر.
 
-[دليل التطوير](docs/DEVELOPMENT-AR.md) · [سجل التغييرات](CHANGELOG.md) · [تفاصيل 1.3.0 وحدود التحقق](docs/RELEASE-1.3.0-AR.md) · [قائمة الاختبار اليدوي](docs/MANUAL-RELEASE-CHECKLIST-AR.md)
+[دليل التطوير](docs/DEVELOPMENT-AR.md) · [سجل التغييرات](CHANGELOG.md) · [تفاصيل 1.3.1 وحدود التحقق](docs/RELEASE-1.3.1-AR.md) · [قائمة الاختبار اليدوي](docs/MANUAL-RELEASE-CHECKLIST-AR.md)
 
 للإبلاغ عن مشكلة، [افتح بلاغًا](https://github.com/abooodHub/PingMonitor_SA/issues) واذكر إصدار البرنامج وWindows وخطوات إعادة المشكلة.

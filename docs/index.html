@@ -120,14 +120,14 @@
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <span class="eyebrow">متاح لويندوز · التحديث 1.3.0</span>
+        <span class="eyebrow">متاح لويندوز · التحديث 1.3.1</span>
         <h1 id="hero-title">راقب اتصالك.<br><span>وافهم كل نتيجة.</span></h1>
         <p class="lead">البنق، تذبذب التأخير وفقد الحزم في واجهة واحدة. اختر خوادمك، أنشئ قوائمك، وتابع التفاصيل بالعربية أو الإنجليزية.</p>
         <div class="actions">
-          <a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>تحميل البرنامج <bdi>ZIP</bdi></a>
+          <a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.exe"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>تحميل البرنامج <bdi>EXE</bdi></a>
           <a class="button" href="#start">طريقة التشغيل <span aria-hidden="true">↓</span></a>
         </div>
-        <p class="requirements"><bdi>Windows 10+</bdi> · <bdi>.NET Framework 4.7.2</bdi> · تشغيل بعد فك الضغط</p>
+        <p class="requirements"><bdi>Windows 10+</bdi> · <bdi>.NET Framework 4.7.2</bdi> · ملف EXE واحد</p>
       </section>
       <figure class="preview">
         <div class="preview-bar"><span class="preview-label">من داخل البرنامج</span><div class="language-switch" role="group" aria-label="لغة لقطة الشاشة"><button type="button" aria-pressed="true" data-language="ar">العربية</button><button type="button" aria-pressed="false" data-language="en" lang="en">English</button></div></div>
@@ -150,10 +150,10 @@
       </section>
       <section id="start" class="content" aria-labelledby="start-title">
         <div class="setup">
-          <div class="section-heading"><span class="label">بداية بسيطة</span><h2 id="start-title">حمّل، فك الضغط،<br>وابدأ المراقبة.</h2><p>البرنامج جاهز للتشغيل من الحزمة، دون معالج تثبيت.</p><p class="requirements">المتطلبات: Windows 10 أو أحدث<br>و.NET Framework 4.7.2</p><p class="release-link"><a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest">تفاصيل الإصدار وملفات التحميل ↗</a></p></div>
+          <div class="section-heading"><span class="label">بداية بسيطة</span><h2 id="start-title">حمّل، شغّل،<br>وابدأ المراقبة.</h2><p>ملف EXE واحد للتشغيل، دون معالج تثبيت أو ملف إعداد بجواره.</p><p class="requirements">المتطلبات: Windows 10 أو أحدث<br>و.NET Framework 4.7.2</p><p class="release-link"><a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest">تفاصيل الإصدار وملفات التحميل ↗</a></p></div>
           <ol class="steps">
-            <li><h3>حمّل حزمة البرنامج</h3><p>اختر <a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip"><bdi>PingMonitor.SA.v1.zip</bdi></a>، ثم فك الضغط عن جميع محتوياتها في مجلد تختاره.</p></li>
-            <li><h3>شغّل الملف التنفيذي</h3><p>افتح <code>PingMonitor.SA.v1.exe</code>، وأبقِ ملف <code>PingMonitor.SA.v1.exe.config</code> بجواره.</p></li>
+            <li><h3>حمّل ملف البرنامج</h3><p>نزّل <a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.exe"><bdi>PingMonitor.SA.v1.exe</bdi></a>، أو اختر <a href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip">حزمة ZIP مع التعليمات</a> وفك ضغطها.</p></li>
+            <li><h3>شغّل الملف التنفيذي</h3><p>افتح <code>PingMonitor.SA.v1.exe</code> مباشرة. يجهّز البرنامج إعداد التشغيل تلقائيًا داخل AppData.</p></li>
             <li><h3>اختر ما تريد مراقبته</h3><p>حدّد المزودين من الأعلى، أو افتح «إدارة القوائم». لتفاصيل أكثر، انقر مرتين على أي خادم.</p></li>
           </ol>
         </div>
@@ -162,6 +162,7 @@
         <div class="faq-layout">
           <div class="section-heading"><span class="label">قبل أن تبدأ</span><h2 id="faq-title">أسئلة شائعة</h2><p>عن الحفظ والقياسات والاستخدام اليومي.</p></div>
           <div class="faq-list">
+            <details><summary>هل أحتاج ملف الإعداد بجوار البرنامج؟</summary><p>من التحديث 1.3.1 يكفي ملف EXE وحده. إعداد التشغيل مضمّن ويُجهّز داخل AppData، مع بقاء الحاجة إلى .NET Framework. للتحديث، أغلق النسخة القديمة واستبدل EXE في المجلد نفسه؛ يمكنك حذف ملف <code>.exe.config</code> القديم.</p></details>
             <details><summary>أين تُحفظ قوائمي؟</summary><p>داخل <code>%LOCALAPPDATA%\PingMonitor.SA</code> في مجلد AppData المخفي افتراضيًا، بعيدًا عن ملف EXE. يمكنك فتح مجلد البيانات من «حول البرنامج» عبر F1. تُحفظ القوائم وتفضيلات العرض تلقائيًا مع نسخة احتياطية لملف البيانات.</p></details>
             <details><summary>هل تُحفظ القياسات بعد إغلاق البرنامج؟</summary><p>القياسات تبقى في الذاكرة أثناء الجلسة فقط. لحفظها، صدّر بيانات الخادم من نافذة التفاصيل أو ملخص الجلسة من قائمة «أدوات» إلى CSV.</p></details>
             <details><summary>هل عدم الرد يعني انقطاع الإنترنت؟</summary><p>ليس بالضرورة؛ قد يمنع الخادم طلبات ICMP. افتح التفاصيل لمعرفة سبب آخر فشل. نسبة الفقد تعتمد على آخر 20 محاولة ICMP، ولا تشمل أخطاء DNS أو التنفيذ.</p></details>
@@ -170,7 +171,7 @@
           </div>
         </div>
       </section>
-      <aside class="closing" aria-label="تحميل البرنامج"><div><h2>قائمتك جاهزة للمراقبة.</h2><p>ابدأ بالخوادم المدمجة، ثم رتّب قوائمك كما يناسبك.</p></div><a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.zip">تحميل <bdi>PingMonitor.SA.v1</bdi> <span aria-hidden="true">↓</span></a></aside>
+      <aside class="closing" aria-label="تحميل البرنامج"><div><h2>قائمتك جاهزة للمراقبة.</h2><p>ابدأ بالخوادم المدمجة، ثم رتّب قوائمك كما يناسبك.</p></div><a class="button primary" href="https://github.com/abooodHub/PingMonitor_SA/releases/latest/download/PingMonitor.SA.v1.exe">تحميل <bdi>PingMonitor.SA.v1</bdi> <span aria-hidden="true">↓</span></a></aside>
     </main>
     <footer><span><bdi>PingMonitor.SA.v1</bdi> · تطوير <a href="https://github.com/abooodHub">abooodHub</a></span><div class="links"><a href="https://github.com/abooodHub/PingMonitor_SA#readme">دليل الاستخدام</a><a href="https://github.com/abooodHub/PingMonitor_SA/blob/main/CHANGELOG.md">سجل التغييرات</a><a href="https://github.com/abooodHub/PingMonitor_SA/issues">الإبلاغ عن مشكلة</a></div></footer>
   </div>

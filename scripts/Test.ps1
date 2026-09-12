@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $windowsPowerShell = Join-Path $env:WINDIR 'System32\WindowsPowerShell\v1.0\powershell.exe'
-$suites = @('Run-LogicTests', 'Run-UiSmoke', 'Run-RegressionTests', 'Run-MotionSmoke', 'Run-ReleaseFeaturesTests', 'Run-LayoutTests')
+$suites = @('Run-LogicTests', 'Run-UiSmoke', 'Run-RegressionTests', 'Run-MotionSmoke', 'Run-ReleaseFeaturesTests', 'Run-LayoutTests', 'Run-SingleFileTests')
 if ($Profile -eq 'Full') { $suites += 'Run-ProviderSwitchTests' }
 else { Write-Host 'SKIP: ProviderSwitch live pending-network test requires the Full profile on a suitable network.' }
 foreach ($suite in $suites) {

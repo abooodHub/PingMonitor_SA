@@ -25,7 +25,6 @@ jobs:
           name: PingMonitor-SA-ci
           path: |
             bin/Release/PingMonitor.SA.v1.exe
-            bin/Release/PingMonitor.SA.v1.exe.config
           if-no-files-found: error
           retention-days: 14
   publish:

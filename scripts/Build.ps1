@@ -37,13 +37,13 @@ $stagingPath = Join-Path $projectRoot ('artifacts\packages\' + [Guid]::NewGuid()
 $runtimePath = Join-Path $stagingPath "PingMonitor-SA-$version"
 $sourcePath = Join-Path $stagingPath "PingMonitor-SA-$version-source"
 foreach ($directory in @($releasePath, $runtimePath, $sourcePath)) { [void][IO.Directory]::CreateDirectory($directory) }
-foreach ($file in @('PingMonitor.SA.v1.exe', 'PingMonitor.SA.v1.exe.config')) {
+foreach ($file in @('PingMonitor.SA.v1.exe')) {
     Copy-Item -LiteralPath (Join-Path $outputPath $file) -Destination $runtimePath
 }
 Copy-Item -LiteralPath (Join-Path $projectRoot "docs\RELEASE-$version-AR.md") -Destination (Join-Path $runtimePath 'RELEASE-NOTES.md')
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'PACKAGE-README.txt') -Destination (Join-Path $runtimePath 'README.txt')
 # Explicit source allowlist: never include local user data, output or upstream snapshots.
-$sourceItems = @('.gitignore', '.github', 'app.manifest', 'App.config', 'Program.cs', 'ping.ico', 'PingMonitor.csproj', 'PingMonitor.sln', 'README.md', 'CHANGELOG.md', 'Core', 'Services', 'Persistence', 'UI', 'Properties', 'Resources', 'docs', 'scripts')
+$sourceItems = @('.gitignore', '.github', 'app.manifest', 'Runtime.config', 'Program.cs', 'ping.ico', 'PingMonitor.csproj', 'PingMonitor.sln', 'README.md', 'CHANGELOG.md', 'Core', 'Services', 'Persistence', 'UI', 'Properties', 'Resources', 'docs', 'scripts')
 foreach ($item in $sourceItems) { Copy-Item -LiteralPath (Join-Path $projectRoot $item) -Destination $sourcePath -Recurse }
 [void][IO.Directory]::CreateDirectory((Join-Path $sourcePath 'tests'))
 Get-ChildItem -LiteralPath (Join-Path $projectRoot 'tests') -Filter '*.ps1' -File | Copy-Item -Destination (Join-Path $sourcePath 'tests')
@@ -51,6 +51,8 @@ $runtimeZip = Join-Path $releasePath "PingMonitor-SA-$version.zip"
 $sourceZip = Join-Path $releasePath "PingMonitor-SA-$version-source.zip"
 Compress-Archive -LiteralPath $runtimePath -DestinationPath $runtimeZip -Force
 Compress-Archive -LiteralPath $sourcePath -DestinationPath $sourceZip -Force
+& (Join-Path $env:WINDIR 'System32\WindowsPowerShell\v1.0\powershell.exe') -NoProfile -ExecutionPolicy Bypass -Sta -File (Join-Path $projectRoot 'tests\Run-PackageSmoke.ps1') -PackagePath $runtimeZip
+if ($LASTEXITCODE -ne 0) { throw 'Packaged EXE verification failed.' }
 # Refresh the convenient unpacked local executable as well.
 Copy-Item -LiteralPath $runtimePath -Destination $releasePath -Recurse -Force
 $hashLines = foreach ($file in @($runtimeZip, $sourceZip, (Join-Path $releasePath "PingMonitor-SA-$version\PingMonitor.SA.v1.exe"))) {
